@@ -29,5 +29,5 @@ func (y YaegiRunner) RunWithInput(input core.Input, code core.Code) (Result, err
 		return nil, err
 	}
 
-	return ResultDump{output: stdout.String()}, nil
+	return concreteResult{output: stdout.String()}, nil
 }

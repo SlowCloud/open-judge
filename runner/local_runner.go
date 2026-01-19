@@ -35,7 +35,7 @@ func (l LocalRunner) RunWithInput(input core.Input, code core.Code) (Result, err
 		return nil, err
 	}
 
-	return ResultDump{
+	return concreteResult{
 		output: string(output),
 	}, nil
 }
