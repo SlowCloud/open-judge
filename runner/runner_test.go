@@ -1,11 +1,12 @@
-package runner
+package runner_test
 
 import (
 	"open-judge/core"
+	"open-judge/runner"
 	"testing"
 )
 
-var runners = []Runner{YaegiRunner{}, LocalRunner{}}
+var runners = []runner.Runner{runner.YaegiRunner{}, runner.LocalRunner{}}
 
 func TestRun(t *testing.T) {
 	for _, runner := range runners {
