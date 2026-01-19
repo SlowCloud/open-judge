@@ -1,15 +1,15 @@
-package main
+package runner
 
 import (
-	"open-judge/src/interfaces"
+	"open-judge/core"
 	"testing"
 )
 
-var runners = []interfaces.Runner{YaegiRunner{}, LocalRunner{}}
+var runners = []Runner{YaegiRunner{}, LocalRunner{}}
 
 func TestRun(t *testing.T) {
 	for _, runner := range runners {
-		_, err := runner.Run(`package main; import "fmt"; func main() {fmt.Print("hello!")}`)
+		_, err := runner.Run(core.NewCode(`package main; import "fmt"; func main() {fmt.Print("hello!")}`))
 		if err != nil {
 			t.Fatal("failed to run!", err)
 		}
@@ -18,7 +18,7 @@ func TestRun(t *testing.T) {
 
 func TestRun_Fail(t *testing.T) {
 	for _, runner := range runners {
-		_, err := runner.Run(`randomword`)
+		_, err := runner.Run(core.NewCode(`randomword`))
 		if err == nil {
 			t.Fatal("failed to fail code!", err)
 		}
@@ -28,11 +28,11 @@ func TestRun_Fail(t *testing.T) {
 func TestRunWithInput(t *testing.T) {
 	for _, runner := range runners {
 		input := "this_is_input!"
-		res, err := runner.RunWithInput(interfaces.Input(input), `package main; import "fmt"; func main() {
+		res, err := runner.RunWithInput(core.NewInput(input), core.NewCode(`package main; import "fmt"; func main() {
 		var s string
 		fmt.Scan(&s)
 		fmt.Print(s)
-		}`)
+		}`))
 		if err != nil {
 			t.Fatal("failed to run code!", err)
 		}

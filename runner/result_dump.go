@@ -1,6 +1,4 @@
-package main
-
-import "open-judge/src/interfaces"
+package runner
 
 type ResultDump struct {
 	output string
@@ -11,4 +9,4 @@ func (r ResultDump) GetOutput() string {
 	return r.output
 }
 
-var _ interfaces.Result = ResultDump{}
+var _ Result = ResultDump{}
