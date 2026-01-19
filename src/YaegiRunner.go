@@ -13,7 +13,7 @@ type YaegiRunner struct {
 
 var _ interfaces.Runner = YaegiRunner{}
 
-func (judger YaegiRunner) Run(code interfaces.Code) interfaces.Result {
+func (judger YaegiRunner) Run(code interfaces.Code) (interfaces.Result, error) {
 
 	var stdout bytes.Buffer
 	i := interp.New(interp.Options{Stdout: &stdout})
@@ -21,8 +21,8 @@ func (judger YaegiRunner) Run(code interfaces.Code) interfaces.Result {
 
 	_, err := i.Eval(string(code))
 	if err != nil {
-		return ResultDump{output: err.Error(), success: false, err: err}
+		return nil, err
 	}
 
-	return ResultDump{output: stdout.String(), success: true}
+	return ResultDump{output: stdout.String()}, nil
 }

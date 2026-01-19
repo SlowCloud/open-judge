@@ -10,20 +10,20 @@ import (
 type LocalRunner struct {
 }
 
-func (l LocalRunner) Run(code interfaces.Code) interfaces.Result {
+func (l LocalRunner) Run(code interfaces.Code) (interfaces.Result, error) {
 	return l.RunWithInput("", code)
 }
 
-func (l LocalRunner) RunWithInput(input interfaces.Input, code interfaces.Code) interfaces.Result {
+func (l LocalRunner) RunWithInput(input interfaces.Input, code interfaces.Code) (interfaces.Result, error) {
 	file, err := os.CreateTemp("", "openjudge-*.go")
 	if err != nil {
-		return ResultDump{success: false, err: err}
+		return nil, err
 	}
 	defer os.Remove(file.Name())
 
 	_, err = file.Write([]byte(code))
 	if err != nil {
-		return ResultDump{success: false, err: err}
+		return nil, err
 	}
 	file.Close()
 
@@ -32,17 +32,12 @@ func (l LocalRunner) RunWithInput(input interfaces.Input, code interfaces.Code) 
 
 	output, err := cmd.CombinedOutput()
 	if err != nil {
-		return ResultDump{
-			success: false,
-			output:  string(output),
-			err:     err,
-		}
+		return nil, err
 	}
 
 	return ResultDump{
-		output:  string(output),
-		success: true,
-	}
+		output: string(output),
+	}, nil
 }
 
 var _ interfaces.Runner = LocalRunner{}

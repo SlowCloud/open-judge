@@ -1,11 +1,9 @@
 package interfaces
 
 type Runner interface {
-	Run(code Code) Result
+	Run(code Code) (Result, error)
 }
 
 type Result interface {
-	IsError() bool
 	GetOutput() string
-	GetError() error
 }
