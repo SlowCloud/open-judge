@@ -8,5 +8,5 @@ type Runner interface {
 }
 
 type Result interface {
-	GetOutput() string
+	String() string
 }

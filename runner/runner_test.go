@@ -37,8 +37,8 @@ func TestRunWithInput(t *testing.T) {
 		if err != nil {
 			t.Fatal("failed to run code!", err)
 		}
-		if res.GetOutput() != input {
-			t.Fatal("output is not same with expected! ", res.GetOutput())
+		if res.String() != input {
+			t.Fatal("output is not same with expected! ", res.String())
 		}
 	}
 }
