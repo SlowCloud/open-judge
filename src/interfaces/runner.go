@@ -7,4 +7,5 @@ type Runner interface {
 type Result interface {
 	IsError() bool
 	GetOutput() string
+	GetError() error
 }
