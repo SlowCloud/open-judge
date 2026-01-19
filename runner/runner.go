@@ -6,7 +6,3 @@ type Runner interface {
 	Run(code core.Code) (Result, error)
 	RunWithInput(input core.Input, code core.Code) (Result, error)
 }
-
-type Result interface {
-	String() string
-}
