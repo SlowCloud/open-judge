@@ -17,7 +17,6 @@ type TestCase interface {
 	Answer() Answer
 }
 
-type Input string
 type Answer string
 
 type JudgeResult interface {
