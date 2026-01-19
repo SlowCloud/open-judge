@@ -1,16 +1,11 @@
 package core
 
 type Problem interface {
-	Description() Description
+	Description() string
 	TestCases() []TestCase
 }
 
-type Description interface{ String() string }
-
 type TestCase interface {
-	Input() TestInput
-	Answer() TestAnswer
+	Input() string
+	Answer() string
 }
-
-type TestInput interface{ String() string }
-type TestAnswer interface{ String() string }
