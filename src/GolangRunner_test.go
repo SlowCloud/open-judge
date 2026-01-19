@@ -4,7 +4,7 @@ import (
 	"testing"
 )
 
-func TestJudge(t *testing.T) {
+func TestRun(t *testing.T) {
 	runner := GolangRunner{}
 	result := runner.Run(`print("testing judge!")`)
 	if result.IsError() {
@@ -16,7 +16,7 @@ func TestJudge(t *testing.T) {
 	t.Logf("success to run code! result: %s", result.GetOutput())
 }
 
-func TestJudgeFail(t *testing.T) {
+func TestRunFail(t *testing.T) {
 	runner := GolangRunner{}
 	result := runner.Run(`randomword`)
 	if !result.IsError() {
