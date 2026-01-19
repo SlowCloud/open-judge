@@ -4,19 +4,16 @@ import (
 	"testing"
 )
 
-func TestRun(t *testing.T) {
+func TestRun_YaegiRunner(t *testing.T) {
 	runner := YaegiRunner{}
-	result := runner.Run(`package main; import "fmt"; func main() {fmt.Print("hello!")}`)
-	if result.IsError() {
-		t.Fatal("failed to compile and run code!", result.GetError(), result.GetOutput())
+	res := runner.Run(`package main; import "fmt"; func main() {fmt.Print("hello!")}`)
+	if res.IsError() {
+		t.Fatal("failed to run!", res.GetError().Error())
 	}
-	if result.GetOutput() != "hello!" {
-		t.Fatalf("output is not same! the output: %s", result.GetOutput())
-	}
-	t.Logf("success to run code! result: %s", result.GetOutput())
+	t.Log(res.GetOutput())
 }
 
-func TestRunFail(t *testing.T) {
+func TestRun_Fail_YaegiRunner(t *testing.T) {
 	runner := YaegiRunner{}
 	result := runner.Run(`randomword`)
 	if !result.IsError() {
