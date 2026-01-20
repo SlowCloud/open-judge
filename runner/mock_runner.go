@@ -2,6 +2,7 @@ package runner
 
 import (
 	"errors"
+	"open-judge/core"
 )
 
 const (
@@ -12,11 +13,11 @@ const (
 type MockRunner struct {
 }
 
-func (m MockRunner) Run(code string, timeout int) (Result, error) {
-	return m.RunWithInput("", code, timeout)
+func (m MockRunner) Run(code string, limit core.Limit) (Result, error) {
+	return m.RunWithInput(code, "", limit)
 }
 
-func (m MockRunner) RunWithInput(input string, code string, timeout int) (Result, error) {
+func (m MockRunner) RunWithInput(code string, input string, limit core.Limit) (Result, error) {
 	if code == MockCode {
 		return Result{MockAnswer, 0, 0}, nil
 	}
