@@ -1,11 +1,13 @@
 package core
 
-type Problem interface {
-	Description() string
-	TestCases() []TestCase
+type Problem struct {
+	Description string
+	TestCases   []TestCase
+	TimeLimit   int
+	MemoryLimit int
 }
 
-type TestCase interface {
-	Input() string
-	Answer() string
+type TestCase struct {
+	Input  string
+	Answer string
 }
