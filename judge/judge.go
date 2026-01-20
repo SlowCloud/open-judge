@@ -7,8 +7,5 @@ import (
 
 type Judge interface {
 	setRunner(runner runner.Runner)
-	Judge(problem core.Problem, code core.Code) (JudgeResult, JudgeError)
+	Judge(problem core.Problem, code core.Code) (bool, error)
 }
-
-type JudgeResult interface{ Result() []string }
-type JudgeError interface{ Error() string }
