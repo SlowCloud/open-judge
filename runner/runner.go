@@ -1,8 +1,6 @@
 package runner
 
-import "open-judge/core"
-
 type Runner interface {
-	Run(code core.Code, timeout int) (Result, error)
-	RunWithInput(input core.Input, code core.Code, timeout int) (Result, error)
+	Run(code string, timeout int) (Result, error)
+	RunWithInput(input string, code string, timeout int) (Result, error)
 }

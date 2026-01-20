@@ -1,7 +1,6 @@
 package runner_test
 
 import (
-	"open-judge/core"
 	"open-judge/runner"
 	"testing"
 )
@@ -9,7 +8,7 @@ import (
 func TestRun(t *testing.T) {
 	mockRunner := runner.MockRunner{}
 
-	result, err := mockRunner.Run(core.NewCode(runner.MockInput), 1)
+	result, err := mockRunner.Run(runner.MockInput, 1)
 
 	if err != nil {
 		t.Fatal("failed to compile and run code", err)
@@ -22,7 +21,7 @@ func TestRun(t *testing.T) {
 func TestRun_fail(t *testing.T) {
 	mockRunner := runner.MockRunner{}
 
-	_, err := mockRunner.Run(core.NewCode("random input"), 1)
+	_, err := mockRunner.Run("random input", 1)
 
 	if err == nil {
 		t.Fatal("should not success to run...", err)
