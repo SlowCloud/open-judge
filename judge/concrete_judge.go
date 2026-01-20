@@ -21,7 +21,7 @@ func (c concreteJudge) Judge(problem core.Problem, code string) (result bool, er
 
 	for _, testcase := range problem.TestCases {
 
-		res, err := c.runner.RunWithInput(code, testcase.Input, problem.TimeLimit)
+		res, err := c.runner.RunWithInput(testcase.Input, code, problem.TimeLimit)
 		if err != nil {
 			return false, err
 		}
