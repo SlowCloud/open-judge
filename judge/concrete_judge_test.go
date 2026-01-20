@@ -8,6 +8,10 @@ import (
 )
 
 var (
+	defaultLimit = core.Limit{
+		TimeLimit:   1,
+		MemoryLimit: 5 * 1000 * 1000, // 5MB
+	}
 	mockProblem = core.Problem{
 		TestCases: []core.TestCase{
 			{
@@ -15,8 +19,7 @@ var (
 				Answer: runner.MockAnswer,
 			},
 		},
-		TimeLimit:   1,
-		MemoryLimit: 5000 * 1000, // 5MB
+		Limit: defaultLimit,
 	}
 )
 

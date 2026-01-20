@@ -21,16 +21,16 @@ func (c concreteJudge) Judge(problem core.Problem, code string) (result bool, er
 
 	for _, testcase := range problem.TestCases {
 
-		res, err := c.runner.RunWithInput(testcase.Input, code, problem.TimeLimit)
+		res, err := c.runner.RunWithInput(code, testcase.Input, problem.Limit)
 		if err != nil {
 			return false, err
 		}
 
-		if res.MemoryUsed > problem.MemoryLimit {
+		if res.MemoryUsed > problem.Limit.MemoryLimit {
 			return false, errors.New("Memory Limit Exceed")
 		}
 
-		if res.TimeTaken > time.Duration(problem.TimeLimit)*time.Second {
+		if res.TimeTaken > time.Duration(problem.Limit.TimeLimit)*time.Second {
 			return false, errors.New("Time Limit Exceed")
 		}
 
