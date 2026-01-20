@@ -3,7 +3,7 @@ package runner
 import "time"
 
 type Result struct {
-	Log        []string
+	Log        string
 	TimeTaken  time.Duration
-	MemoryUsed int64
+	MemoryUsed int
 }

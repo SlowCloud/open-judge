@@ -18,7 +18,7 @@ func (m MockRunner) Run(code string, timeout int) (Result, error) {
 
 func (m MockRunner) RunWithInput(input string, code string, timeout int) (Result, error) {
 	if code == MockInput {
-		return Result{[]string{MockOutput}, 0, 0}, nil
+		return Result{MockOutput, 0, 0}, nil
 	}
 	return Result{}, errors.New("failed to run")
 }

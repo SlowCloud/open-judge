@@ -13,7 +13,7 @@ func TestRun(t *testing.T) {
 	if err != nil {
 		t.Fatal("failed to compile and run code", err)
 	}
-	if result.Log[0] != runner.MockOutput {
+	if result.Log != runner.MockOutput {
 		t.Fatal("result is not same with expected")
 	}
 }
