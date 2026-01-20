@@ -5,8 +5,8 @@ import (
 )
 
 const (
-	MockInput  = "mock_input"
-	MockOutput = "mock_output"
+	MockCode   = "mock_code"
+	MockAnswer = "mock_answer"
 )
 
 type MockRunner struct {
@@ -17,8 +17,8 @@ func (m MockRunner) Run(code string, timeout int) (Result, error) {
 }
 
 func (m MockRunner) RunWithInput(input string, code string, timeout int) (Result, error) {
-	if code == MockInput {
-		return Result{MockOutput, 0, 0}, nil
+	if code == MockCode {
+		return Result{MockAnswer, 0, 0}, nil
 	}
 	return Result{}, errors.New("failed to run")
 }

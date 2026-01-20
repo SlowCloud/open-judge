@@ -8,12 +8,12 @@ import (
 func TestRun(t *testing.T) {
 	mockRunner := runner.MockRunner{}
 
-	result, err := mockRunner.Run(runner.MockInput, 1)
+	result, err := mockRunner.Run(runner.MockCode, 1)
 
 	if err != nil {
 		t.Fatal("failed to compile and run code", err)
 	}
-	if result.Log != runner.MockOutput {
+	if result.Log != runner.MockAnswer {
 		t.Fatal("result is not same with expected")
 	}
 }
