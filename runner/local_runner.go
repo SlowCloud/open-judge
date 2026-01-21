@@ -34,7 +34,7 @@ func (l LocalRunner) RunWithInput(code string, input string, limit core.Limit) (
 	file.Close()
 
 	background := context.Background()
-	ctx, cancel := context.WithTimeout(background, time.Duration(limit.TimeLimit)*time.Second)
+	ctx, cancel := context.WithTimeout(background, time.Duration(limit.TimeLimit)*time.Millisecond)
 	defer cancel()
 
 	cmd := exec.CommandContext(ctx, "go", "run", file.Name())

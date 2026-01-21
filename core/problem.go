@@ -9,8 +9,9 @@ type Problem struct {
 }
 
 type Limit struct {
-	// second
-	TimeLimit   int
+	// millisecond
+	TimeLimit int64
+	// byte
 	MemoryLimit uint64
 }
 
@@ -22,7 +23,7 @@ type TestCase struct {
 // returns "almost" no limit.
 func NoLimit() Limit {
 	return Limit{
-		TimeLimit:   int(time.Hour),
+		TimeLimit:   int64(time.Hour),
 		MemoryLimit: 1e18,
 	}
 }

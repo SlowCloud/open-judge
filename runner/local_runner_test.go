@@ -13,7 +13,7 @@ func Test_LocalRunner_Run(t *testing.T) {
 
 func Test_LocalRunner_Run_Timeout(t *testing.T) {
 	runner_ := runner.LocalRunner{}
-	_, err := runner_.Run(`package main; import "time"; func main() {time.Sleep(10*time.Minute)}`, core.Limit{TimeLimit: 1, MemoryLimit: 1000 * 1000 * 1000})
+	_, err := runner_.Run(`package main; import "time"; func main() {time.Sleep(10*time.Minute)}`, core.Limit{TimeLimit: 1000, MemoryLimit: 1000 * 1000 * 1000})
 	if err == nil {
 		t.Fatal("it must fail...")
 	}
@@ -32,7 +32,7 @@ func main() {
 `
 
 	limit := core.Limit{
-		TimeLimit:   5,
+		TimeLimit:   5000,             // 5sec
 		MemoryLimit: 10 * 1024 * 1024, // 10MB 제한
 	}
 
