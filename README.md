@@ -18,9 +18,19 @@
 ### Runner
 
 ```golang
-runner := LocalRunner{}
+package main
 
-code := `
+import (
+	"fmt"
+	"open-judge/core"
+	"open-judge/runner"
+)
+
+func main() {
+
+	runner := runner.LocalRunner{}
+
+	code := `
 package main
 
 import "fmt"
@@ -30,10 +40,13 @@ func main() {
 }
 `
 
-result, err := runner.Run(code, core.NoLimit)
-if err != nil {
-    panic(err)
+	result, err := runner.Run(code, core.NoLimit())
+	if err != nil {
+		panic(err)
+	}
+
+	fmt.Println(result)
+
 }
 
-fmt.Println(result)
 ```
