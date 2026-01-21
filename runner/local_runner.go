@@ -10,14 +10,14 @@ import (
 	"time"
 )
 
-type localRunner struct{}
+type LocalRunner struct{}
 
 // Run implements Runner.
-func (l localRunner) Run(code string, limit core.Limit) (Result, error) {
+func (l LocalRunner) Run(code string, limit core.Limit) (Result, error) {
 	return l.RunWithInput(code, "", limit)
 }
 
-func (l localRunner) RunWithInput(code string, input string, limit core.Limit) (Result, error) {
+func (l LocalRunner) RunWithInput(code string, input string, limit core.Limit) (Result, error) {
 	file, err := os.CreateTemp("", "openjudge-*.go")
 	if err != nil {
 		return Result{}, err
@@ -47,4 +47,4 @@ func (l localRunner) RunWithInput(code string, input string, limit core.Limit) (
 	return Result{Log: buf.String(), TimeTaken: time.Second, MemoryUsed: -1}, nil
 }
 
-var _ Runner = localRunner{}
+var _ Runner = LocalRunner{}
