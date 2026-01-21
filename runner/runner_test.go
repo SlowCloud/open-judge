@@ -5,13 +5,18 @@ import (
 	"testing"
 )
 
+const (
+	mockCodeWithoutInput   = `package main; import "fmt"; func main() {fmt.Print("hello!")}`
+	mockAnswerWithoutInput = `hello!`
+)
+
 func testRun(runner_ runner.Runner, t *testing.T) {
-	result, err := runner_.Run(runner.MockCode, defaultLimit)
+	result, err := runner_.Run(mockCodeWithoutInput, defaultLimit)
 
 	if err != nil {
-		t.Fatal("failed to compile and run code", err)
+		t.Fatal("failed to compile and run code.", err)
 	}
-	if result.Log != runner.MockAnswer {
+	if result.Log != mockAnswerWithoutInput {
 		t.Fatal("result is not same with expected")
 	}
 }
