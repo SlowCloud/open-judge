@@ -49,3 +49,18 @@ func Test_LocaRunner_Run_Fail(t *testing.T) {
 	runner_ := runner.LocalRunner{}
 	testRun_fail(runner_, t)
 }
+
+func Test_LocalRunner_RunWithInput(t *testing.T) {
+	runner_ := runner.LocalRunner{}
+
+	result, err := runner_.RunWithInput(`package main; import "fmt"; func main() {var n string; fmt.Scan(&n); fmt.Print(n);}`, "test!", core.NoLimit())
+	if err != nil {
+		t.Fatal("실행 실패,", err)
+	}
+	if result.Log != "test!" {
+		t.Fatal("결과값이 같지 않음,", result)
+	}
+
+	t.Log(result)
+
+}
