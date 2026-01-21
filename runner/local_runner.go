@@ -20,6 +20,7 @@ func (l LocalRunner) Run(code string, limit core.Limit) (Result, error) {
 }
 
 func (l LocalRunner) RunWithInput(code string, input string, limit core.Limit) (Result, error) {
+
 	file, err := os.CreateTemp("", "openjudge-*.go")
 	if err != nil {
 		return Result{}, err
@@ -42,22 +43,35 @@ func (l LocalRunner) RunWithInput(code string, input string, limit core.Limit) (
 	buf := new(bytes.Buffer)
 	cmd.Stdout = buf
 
+	start := time.Now()
+
 	err = cmd.Start()
 	if err != nil {
 		return Result{}, err
 	}
 
-	go l.watchMemoryLimit(ctx, cancel, cmd, limit)
+	result := Result{}
+	go l.watchMemoryLimit(ctx, cancel, cmd, limit, func(currentMemory uint64) {
+		result.MemoryUsed = max(result.MemoryUsed, currentMemory)
+	})
 
 	err = cmd.Wait()
 	if err != nil {
 		return Result{}, err
 	}
 
-	return Result{Log: buf.String(), TimeTaken: time.Second, MemoryUsed: -1}, nil
+	end := time.Now()
+
+	result.Log = buf.String()
+	result.TimeTaken = end.Sub(start)
+
+	return result, nil
 }
 
-func (l LocalRunner) watchMemoryLimit(ctx context.Context, cancel context.CancelFunc, cmd *exec.Cmd, limit core.Limit) {
+// 메모리 감시.
+// 메모리가 limit을 초과하면 캔슬 후 종료. 그 이유로 컨텍스트가 종료되어도 종료.
+// 최대 메모리 사용량은 result에 기록됨. result에 바로 기록하기보다는 consumer func를 보내는 게 더 좋을 것 같다
+func (l LocalRunner) watchMemoryLimit(ctx context.Context, cancel context.CancelFunc, cmd *exec.Cmd, limit core.Limit, consume func(uint64)) {
 	p, err := process.NewProcess(int32(cmd.Process.Pid))
 	if err != nil {
 		cancel()
@@ -79,6 +93,7 @@ func (l LocalRunner) watchMemoryLimit(ctx context.Context, cancel context.Cancel
 				cancel()
 				return
 			}
+			consume(mem.RSS)
 		}
 	}
 }

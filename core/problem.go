@@ -9,7 +9,7 @@ type Problem struct {
 type Limit struct {
 	// second
 	TimeLimit   int
-	MemoryLimit int
+	MemoryLimit uint64
 }
 
 type TestCase struct {
