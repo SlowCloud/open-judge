@@ -6,11 +6,9 @@ import (
 	"testing"
 )
 
-var defaultLimit = core.Limit{TimeLimit: 3, MemoryLimit: 2000 * 1000 * 1000}
-
 func Test_MockRunner_Run(t *testing.T) {
 	runner_ := runner.MockRunner{}
-	result, err := runner_.Run(runner.MockCode, defaultLimit)
+	result, err := runner_.Run(runner.MockCode, core.NoLimit())
 
 	if err != nil {
 		t.Fatal("failed to compile and run code.", err)
@@ -22,7 +20,7 @@ func Test_MockRunner_Run(t *testing.T) {
 
 func Test_MockRunner_Run_Fail(t *testing.T) {
 	runner_ := runner.MockRunner{}
-	_, err := runner_.Run("random input", defaultLimit)
+	_, err := runner_.Run("random input", core.NoLimit())
 
 	if err == nil {
 		t.Fatal("should not success to run...", err)

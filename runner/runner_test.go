@@ -1,6 +1,7 @@
 package runner_test
 
 import (
+	"open-judge/core"
 	"open-judge/runner"
 	"testing"
 )
@@ -11,7 +12,7 @@ const (
 )
 
 func testRun(runner_ runner.Runner, t *testing.T) {
-	result, err := runner_.Run(mockCodeWithoutInput, defaultLimit)
+	result, err := runner_.Run(mockCodeWithoutInput, core.NoLimit())
 
 	if err != nil {
 		t.Fatal("failed to compile and run code.", err)
@@ -22,7 +23,7 @@ func testRun(runner_ runner.Runner, t *testing.T) {
 }
 
 func testRun_fail(runner_ runner.Runner, t *testing.T) {
-	_, err := runner_.Run("random input", defaultLimit)
+	_, err := runner_.Run("random input", core.NoLimit())
 
 	if err == nil {
 		t.Fatal("should not success to run...", err)
