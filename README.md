@@ -40,7 +40,10 @@ import (
 
 func main() {
 
-	runner := runner.LocalRunner{}
+	runner, err := runner.NewGo()
+	if err != nil {
+		panic(err)
+	}
 
 	code := `
 package main
