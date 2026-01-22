@@ -3,6 +3,7 @@ package runner
 import (
 	"bytes"
 	"context"
+	"fmt"
 	"open-judge/core"
 	"os"
 	"os/exec"
@@ -14,8 +15,13 @@ import (
 
 type goRunner struct{}
 
-func NewGo() Runner {
-	return goRunner{}
+func NewGo() (Runner, error) {
+	_, err := exec.LookPath("go")
+	if err != nil {
+		fmt.Println("go 명령어가 존재하지 않습니다.")
+		return nil, err
+	}
+	return goRunner{}, nil
 }
 
 // Run implements Runner.
