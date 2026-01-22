@@ -8,13 +8,6 @@ type Problem struct {
 	Limit       Limit
 }
 
-type Limit struct {
-	// millisecond
-	TimeLimit int64
-	// byte
-	MemoryLimit uint64
-}
-
 type TestCase struct {
 	Input  string
 	Answer string
