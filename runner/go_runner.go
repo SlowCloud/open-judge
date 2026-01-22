@@ -12,18 +12,18 @@ import (
 	"github.com/shirou/gopsutil/v4/process"
 )
 
-type LocalRunner struct{}
+type goRunner struct{}
 
 func NewGo() Runner {
-	return LocalRunner{}
+	return goRunner{}
 }
 
 // Run implements Runner.
-func (l LocalRunner) Run(code string, limit core.Limit) (Result, error) {
+func (l goRunner) Run(code string, limit core.Limit) (Result, error) {
 	return l.RunWithInput(code, "", limit)
 }
 
-func (l LocalRunner) RunWithInput(code string, input string, limit core.Limit) (Result, error) {
+func (l goRunner) RunWithInput(code string, input string, limit core.Limit) (Result, error) {
 
 	file, err := os.CreateTemp("", "openjudge-*.go")
 	if err != nil {
@@ -75,7 +75,7 @@ func (l LocalRunner) RunWithInput(code string, input string, limit core.Limit) (
 // 메모리 감시.
 // 메모리가 limit을 초과하면 캔슬 후 종료. 그 이유로 컨텍스트가 종료되어도 종료.
 // 최대 메모리 사용량은 result에 기록됨. result에 바로 기록하기보다는 consumer func를 보내는 게 더 좋을 것 같다
-func (l LocalRunner) watchMemoryLimit(ctx context.Context, cancel context.CancelFunc, cmd *exec.Cmd, limit core.Limit, consume func(uint64)) {
+func (l goRunner) watchMemoryLimit(ctx context.Context, cancel context.CancelFunc, cmd *exec.Cmd, limit core.Limit, consume func(uint64)) {
 	p, err := process.NewProcess(int32(cmd.Process.Pid))
 	if err != nil {
 		cancel()
@@ -102,4 +102,4 @@ func (l LocalRunner) watchMemoryLimit(ctx context.Context, cancel context.Cancel
 	}
 }
 
-var _ Runner = LocalRunner{}
+var _ Runner = goRunner{}
