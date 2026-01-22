@@ -6,13 +6,13 @@ import (
 	"testing"
 )
 
-func Test_LocalRunner_Run(t *testing.T) {
-	runner_ := runner.LocalRunner{}
+func Test_goRunner_Run(t *testing.T) {
+	runner_ := runner.NewGo()
 	testRun(runner_, t)
 }
 
-func Test_LocalRunner_Run_Timeout(t *testing.T) {
-	runner_ := runner.LocalRunner{}
+func Test_goRunner_Run_Timeout(t *testing.T) {
+	runner_ := runner.NewGo()
 	_, err := runner_.Run(`package main; import "time"; func main() {time.Sleep(10*time.Minute)}`, core.Limit{TimeLimit: 1000, MemoryLimit: 1000 * 1000 * 1000})
 	if err == nil {
 		t.Fatal("it must fail...")
@@ -20,8 +20,8 @@ func Test_LocalRunner_Run_Timeout(t *testing.T) {
 	t.Log(err)
 }
 
-func Test_LocalRunner_Run_MemoryLimit(t *testing.T) {
-	runner_ := runner.LocalRunner{}
+func Test_goRunner_Run_MemoryLimit(t *testing.T) {
+	runner_ := runner.NewGo()
 
 	// 100MB 크기의 슬라이스를 할당하여 메모리 한도를 즉시 넘기도록 함
 	targetCode := ` package main; import "time";
@@ -46,12 +46,12 @@ func main() {
 }
 
 func Test_LocaRunner_Run_Fail(t *testing.T) {
-	runner_ := runner.LocalRunner{}
+	runner_ := runner.NewGo()
 	testRun_fail(runner_, t)
 }
 
-func Test_LocalRunner_RunWithInput(t *testing.T) {
-	runner_ := runner.LocalRunner{}
+func Test_goRunner_RunWithInput(t *testing.T) {
+	runner_ := runner.NewGo()
 
 	result, err := runner_.RunWithInput(`package main; import "fmt"; func main() {var n string; fmt.Scan(&n); fmt.Print(n);}`, "test!", core.NoLimit())
 	if err != nil {

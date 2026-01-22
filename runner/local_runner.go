@@ -14,6 +14,10 @@ import (
 
 type LocalRunner struct{}
 
+func NewGo() Runner {
+	return LocalRunner{}
+}
+
 // Run implements Runner.
 func (l LocalRunner) Run(code string, limit core.Limit) (Result, error) {
 	return l.RunWithInput(code, "", limit)
