@@ -17,6 +17,14 @@ func New(runner runner.Runner) Judge {
 	}
 }
 
+func NewGo() (Judge, error) {
+	r, err := runner.NewGo()
+	if err != nil {
+		return nil, err
+	}
+	return New(r), nil
+}
+
 func (c concreteJudge) Judge(problem core.Problem, code string) (result bool, err error) {
 
 	for _, testcase := range problem.TestCases {
