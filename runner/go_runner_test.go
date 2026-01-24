@@ -55,7 +55,7 @@ func main() {
 	t.Logf("예상된 에러 발생: %v", err)
 }
 
-func Test_LocaRunner_Run_Fail(t *testing.T) {
+func Test_goRunner_Run_Fail(t *testing.T) {
 	runner_, err := runner.NewGo()
 	if err != nil {
 		t.Fatal(err)
