@@ -99,7 +99,7 @@ func (l goRunner) watchMemoryLimit(ctx context.Context, cancel context.CancelFun
 		cancel()
 	}
 
-	ticker := time.NewTicker(100 * time.Millisecond)
+	ticker := time.NewTicker(10 * time.Millisecond)
 	defer ticker.Stop()
 	for {
 		select {
