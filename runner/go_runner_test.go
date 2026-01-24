@@ -35,14 +35,15 @@ func Test_goRunner_Run_MemoryLimit(t *testing.T) {
 	// 100MB 크기의 슬라이스를 할당하여 메모리 한도를 즉시 넘기도록 함
 	targetCode := ` package main; import "time";
 func main() {
-    _ = make([]byte, 100 * 1024 * 1024) // 100MB 할당
-    time.Sleep(2 * time.Second)          // 모니터링 루프가 감지할 시간 확보
+    _ = make([]byte, 100 * 1024 * 1024) // 100MB
+	fmt.Println(_) // 컴파일 최적화로 메모리 생성이 스킵되는 것을 방지
+    time.Sleep(2 * time.Second)
 }
 `
 
 	limit := core.Limit{
 		TimeLimit:   5000,             // 5sec
-		MemoryLimit: 10 * 1024 * 1024, // 10MB 제한
+		MemoryLimit: 10 * 1024 * 1024, // 10MB
 	}
 
 	_, err = runner_.Run(targetCode, limit)

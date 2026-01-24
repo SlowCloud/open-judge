@@ -43,11 +43,23 @@ func (l goRunner) RunWithInput(code string, input string, limit core.Limit) (Res
 	}
 	file.Close()
 
+	exePath := file.Name()[:len(file.Name())-3] // detach .go
+	if os.PathSeparator == '\\' {
+		exePath += ".exe"
+	} // for windows
+
+	buildCmd := exec.Command("go", "build", "-o", exePath, file.Name())
+	if err := buildCmd.Run(); err != nil {
+		fmt.Println("failed to compile go file!!!")
+		return Result{}, err
+	}
+	defer os.Remove(exePath)
+
 	background := context.Background()
 	ctx, cancel := context.WithTimeout(background, time.Duration(limit.TimeLimit)*time.Millisecond)
 	defer cancel()
 
-	cmd := exec.CommandContext(ctx, "go", "run", file.Name())
+	cmd := exec.CommandContext(ctx, exePath)
 
 	cmd.Stdin = strings.NewReader(input)
 	buf := new(bytes.Buffer)
