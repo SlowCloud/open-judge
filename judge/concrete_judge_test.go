@@ -8,10 +8,6 @@ import (
 )
 
 var (
-	defaultLimit = core.Limit{
-		TimeLimit:   1000,
-		MemoryLimit: 5 * 1000 * 1000, // 5MB
-	}
 	defaultProblem = core.Problem{
 		TestCases: []core.TestCase{
 			{
@@ -19,7 +15,10 @@ var (
 				Answer: "hello, go!",
 			},
 		},
-		Limit: defaultLimit,
+		Limit: core.Limit{
+			TimeLimit:   1000,
+			MemoryLimit: 5 * 1000 * 1000, // 5MB
+		},
 	}
 	helloWorldCode = `
 	package main
