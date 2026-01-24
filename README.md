@@ -65,3 +65,53 @@ func main() {
 }
 
 ```
+
+### Judge
+
+```golang
+package main
+
+import (
+	"fmt"
+	"open-judge/core"
+	"open-judge/judge"
+)
+
+func main() {
+
+	judge, err := judge.NewGo()
+	if err != nil {
+		panic(err)
+	}
+
+	code := `
+package main
+
+import "fmt"
+
+func main() {
+    fmt.Print("hello!")
+}
+`
+
+	result, err := judge.Judge(core.Problem{TestCases: []core.TestCase{
+		{
+			Input:  "",
+			Answer: "hello!",
+		},
+	},
+		Limit: core.NoLimit(),
+	}, code)
+	if err != nil {
+		panic(err)
+	}
+
+	if err != nil {
+		panic(err)
+	}
+
+	fmt.Println(result)
+
+}
+
+```
