@@ -1,28 +1,44 @@
 package judge_test
 
-// var (
-// 	defaultLimit = core.Limit{
-// 		TimeLimit:   1000,
-// 		MemoryLimit: 5 * 1000 * 1000, // 5MB
-// 	}
-// 	mockProblem = core.Problem{
-// 		TestCases: []core.TestCase{
-// 			{
-// 				Input:  "",
-// 				Answer: runner.MockAnswer,
-// 			},
-// 		},
-// 		Limit: defaultLimit,
-// 	}
-// )
+import (
+	"open-judge/core"
+	"open-judge/judge"
+	"open-judge/runner"
+	"testing"
+)
 
-// func TestJudge(t *testing.T) {
-// 	judge := judge.New(runner.MockRunner{})
-// 	res, err := judge.Judge(mockProblem, runner.MockCode)
-// 	if err != nil {
-// 		t.Fatal("failed to judge!", err)
-// 	}
-// 	if !res {
-// 		t.Fatal("answer is not correct!")
-// 	}
-// }
+var (
+	defaultLimit = core.Limit{
+		TimeLimit:   1000,
+		MemoryLimit: 5 * 1000 * 1000, // 5MB
+	}
+	defaultProblem = core.Problem{
+		TestCases: []core.TestCase{
+			{
+				Input:  "",
+				Answer: "hello, go!",
+			},
+		},
+		Limit: defaultLimit,
+	}
+	helloWorldCode = `
+	package main
+	import "fmt"
+	func main() {fmt.Print("hello, go!")}
+	`
+)
+
+func TestJudge(t *testing.T) {
+	r, err := runner.NewGo()
+	if err != nil {
+		t.Fatal(err)
+	}
+	judge := judge.New(r)
+	res, err := judge.Judge(defaultProblem, helloWorldCode)
+	if err != nil {
+		t.Fatal("failed to judge!", err)
+	}
+	if !res {
+		t.Fatal("answer is not correct!")
+	}
+}
